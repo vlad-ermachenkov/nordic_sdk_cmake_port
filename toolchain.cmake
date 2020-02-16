@@ -1,11 +1,17 @@
+#CPU setup
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR arm)
-
-SET(COMPILER_PATH /mnt/c/Users/ermac/Documents/wsl/gcc-arm-none-eabi-9-2019-q4-major)
-SET(COMPILER_BIN ${COMPILER_PATH}/bin)
-SET(TOOLCHAIN_LIBC_DIR ${COMPILER_PATH}/arm-none-eabi)
-SET(TOOLCHAIN_INC_DIR ${TOOLCHAIN_LIBC_DIR}/include)
-SET(TOOLCHAIN_LIB_DIR ${TOOLCHAIN_LIBC_DIR}/lib)
+#CPU data
+set(cpu_is "thumb")
+set(cpu_arch "v7e-m")
+set(cpu_fp "+fp")
+set(cpu_fp_abi "hard")
+#System paths
+SET(COMPILER_PATH "/mnt/c/Users/ermac/Documents/wsl/gcc-arm-none-eabi-9-2019-q4-major")
+SET(COMPILER_BIN "${COMPILER_PATH}/bin")
+SET(TOOLCHAIN_LIB_DIR "${COMPILER_PATH}/arm-none-eabi/lib/thumb/v7e-m+fp/hard")
+SET(TOOLCHAIN_INC_DIR "${COMPILER_PATH}/arm-none-eabi/include")
+set(LIBLTO_PATH "${COMPILER_PATH}/lib/gcc/arm-none-eabi/9.2.1/liblto_plugin.so")
 
 SET(COMPILER_PREFIX arm-none-eabi-)
 
@@ -15,14 +21,21 @@ SET(CMAKE_CXX_COMPILER "${COMPILER_BIN}/${COMPILER_PREFIX}g++" CACHE INTERNAL ""
 SET(CMAKE_OBJCOPY "${COMPILER_BIN}/${COMPILER_PREFIX}objcopy" CACHE INTERNAL "")
 SET(CMAKE_SIZE "${COMPILER_BIN}/${COMPILER_PREFIX}size" CACHE INTERNAL "")
 SET(CMAKE_OBJDUMP "${COMPILER_BIN}/${COMPILER_PREFIX}objdump" CACHE INTERNAL "")
-SET(CMAKE_CMAKE_LINKER "${COMPILER_BIN}/${COMPILER_PREFIX}ld" CACHE INTERNAL "")
+SET(CMAKE_LINKER "${COMPILER_BIN}/${COMPILER_PREFIX}ld" CACHE INTERNAL "")
+SET(CMAKE_RANLIB "${COMPILER_BIN}/${COMPILER_PREFIX}ranlib" CACHE INTERNAL "")
+SET(CMAKE_AR "${COMPILER_BIN}/${COMPILER_PREFIX}ar" CACHE INTERNAL "")
+SET(CMAKE_NM "${COMPILER_BIN}/${COMPILER_PREFIX}nm" CACHE INTERNAL "")
 
-
-SET(CMAKE_C_FLAGS "-isystem ${TOOLCHAIN_INC_DIR} -std=gnu99" CACHE INTERNAL "c compiler flags")
-SET(CMAKE_CXX_FLAGS "-isystem ${TOOLCHAIN_INC_DIR}" CACHE INTERNAL "cxx compiler flags")
-
-set(CMAKE_EXE_LINKER_FLAGS "--specs=nosys.specs" CACHE INTERNAL "")
-
+SET(CMAKE_C_FLAGS "-isystem ${TOOLCHAIN_INC_DIR}" CACHE INTERNAL "C compiler sysroot")
+SET(CMAKE_CXX_FLAGS "-isystem ${TOOLCHAIN_INC_DIR}" CACHE INTERNAL "CXX compiler sysroot")
+SET(CMAKE_ASM_FLAGS "-isystem ${TOOLCHAIN_INC_DIR}" CACHE INTERNAL "ASM compiler sysroot")
+#setup path for precompiled libs
+set(CMAKE_EXE_LINKER_FLAGS "-L${TOOLCHAIN_LIB_DIR}" CACHE INTERNAL "")
+#To enable lto need to provide this string
+set(CMAKE_C_CREATE_STATIC_LIBRARY "<CMAKE_AR> -cr --plugin=${LIBLTO_PATH} <LINK_FLAGS> <TARGET> <OBJECTS>")
+#Cmake compiles a lib before building a project
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+#Cmake search dirs
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)

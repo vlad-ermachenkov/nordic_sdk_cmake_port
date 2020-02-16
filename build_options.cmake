@@ -8,15 +8,15 @@ if (NOT CMAKE_BUILD_TYPE)
 endif(NOT CMAKE_BUILD_TYPE) 
 
 ###############################################################################
-set(CMAKE_C_FLAGS_DEBUG "-Og -g3" CACHE INTERNAL "C Compiler options for debug build")
-set(CMAKE_CXX_FLAGS_DEBUG "-Og -g3" CACHE INTERNAL "C++ Compiler options for debug build")
-set(CMAKE_ASM_FLAGS_DEBUG "-g3" CACHE INTERNAL "ASM Compiler options for debug build")
-set(CMAKE_EXE_LINKER_FLAGS_DEBUG "" CACHE INTERNAL "Linker options for debug build")
+set(CMAKE_C_FLAGS_DEBUG "-O3 -g3 ${LTO_OPT}" CACHE INTERNAL "C Compiler options for debug build" FORCE)
+set(CMAKE_CXX_FLAGS_DEBUG "-O3 -g3 ${LTO_OPT}" CACHE INTERNAL "C++ Compiler options for debug build" FORCE)
+set(CMAKE_ASM_FLAGS_DEBUG "-g3" CACHE INTERNAL "ASM Compiler options for debug build" FORCE)
+set(CMAKE_EXE_LINKER_FLAGS_DEBUG "-O3 -g3 ${LTO_OPT}" CACHE INTERNAL "Linker options for debug build" FORCE)
 ###############################################################################
-set(CMAKE_C_FLAGS_RELEASE "-O3 ${LTO_OPT}" CACHE INTERNAL "C Compiler options for release build")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 ${LTO_OPT}" CACHE INTERNAL "C++ Compiler options for release build")
-set(CMAKE_ASM_FLAGS_RELEASE "" CACHE INTERNAL "ASM Compiler options for release build")
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${LTO_OPT}" CACHE INTERNAL "Linker options for release build")
+set(CMAKE_C_FLAGS_RELEASE "-O3 ${LTO_OPT}" CACHE INTERNAL "C Compiler options for release build" FORCE)
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 ${LTO_OPT}" CACHE INTERNAL "C++ Compiler options for release build" FORCE)
+set(CMAKE_ASM_FLAGS_RELEASE "" CACHE INTERNAL "ASM Compiler options for release build" FORCE)
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${LTO_OPT}" CACHE INTERNAL "Linker options for release build" FORCE)
 ###############################################################################
 set(CMAKE_C_FLAGS_RELWITHDEBINFO "-Og -g3" CACHE INTERNAL "C Compiler options for release with debug info build")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Og -g3" CACHE INTERNAL "C++ Compiler options for release with debug info build")

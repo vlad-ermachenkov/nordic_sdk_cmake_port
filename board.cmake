@@ -1,118 +1,64 @@
-set(SDK_DIR "/mnt/c/Users/ermac/Documents/SDKs/nRF5SDK160098a08e2")
-set(CMSIS_inc_dir "${SDK_DIR}/components/toolchain/cmsis/include")
-# set(CMSIS_dsp_lib_dir "${SDK_DIR}/components/toolchain/dsp/GCC")
-set(SDK_LIB_DIR "${SDK_DIR}/components/libraries")
-
-set(nrfx_dir "${SDK_DIR}/modules/nrfx")
-set(nrfx_soc_dir "${nrfx_dir}/soc")
-set(nrfx_hal_dir "${nrfx_dir}/hal")
-set(nrfx_mdk_dir "${nrfx_dir}/mdk")
-set(nrfx_drivers_dir "${nrfx_dir}/drivers")
-set(nrfx_helpers_dir "${nrfx_dir}/helpers/nrfx_gppi")
-
-set(int_nrfx_dir "${SDK_DIR}/integration/nrfx")
-set(int_nrfx_legacy_dir "${int_nrfx_dir}/legacy")
-
-set(nrfx_src 
-  ${nrfx_mdk_dir}/gcc_startup_nrf52840.S
-  ${nrfx_mdk_dir}/system_nrf52840.c
-)
-
-set(nrf_lib_util_inc
-  ${SDK_LIB_DIR}/util
-)
-
-set(nrfx_inc
-  ${nrfx_dir}
-  ${nrfx_soc_dir}
-  ${nrfx_mdk_dir}
-  ${nrfx_helpers_dir}
-  ${nrfx_hal_dir}
-  ${nrfx_drivers_dir}
-  ${nrfx_drivers_dir}/include
-  ${int_nrfx_dir}
-  ${int_nrfx_legacy_dir}
-  ${CMSIS_inc_dir}
-)
-
-set(nrf_lib_util_src 
-  ${SDK_LIB_DIR}/util/app_error.c
-  ${SDK_LIB_DIR}/util/app_error_handler_gcc.c
-  ${SDK_LIB_DIR}/util/app_error_weak.c
-  ${SDK_LIB_DIR}/util/app_util_platform.c
-  ${SDK_LIB_DIR}/util/nrf_assert.c
-  ${SDK_LIB_DIR}/util/sdk_mapped_flags.c
-)
-set(nrf_lib_util_inc
-  ${SDK_LIB_DIR}/util
-)
-
-set(nrf_lib_log_dir ${SDK_LIB_DIR}/log)
-
-set(nrf_lib_log_src 
-  "${nrf_lib_log_dir}/src/nrf_log_frontend.c"
-  "${nrf_lib_log_dir}/src/nrf_log_str_formatter.c"
-  "${nrf_lib_log_dir}/src/nrf_log_default_backends.c"
-  "${nrf_lib_log_dir}/src/nrf_log_backend_uart.c"
-  "${nrf_lib_log_dir}/src/nrf_log_backend_serial.c"
-  "${nrf_lib_log_dir}/src/nrf_log_backend_rtt.c"
-)
-
-set(nrf_lib_log_inc
-  "${nrf_lib_log_dir}/src"
-  "${nrf_lib_log_dir}"
-)
-
-set(nrf_lib_section_dir ${SDK_LIB_DIR}/experimental_section_vars)
-
-set(nrf_lib_section_src
-  "${nrf_lib_section_dir}/nrf_section_iter.c"
-)
-
-set(nrf_lib_section_inc
-  "${nrf_lib_section_dir}"
-)
-
-set(nrf_lib_strerror_dir ${SDK_LIB_DIR}/strerror)
-
-set(nrf_lib_strerror_src
-  "${nrf_lib_strerror_dir}/nrf_strerror.c"
-)
-
-set(nrf_lib_strerror_inc
-  "${nrf_lib_strerror_dir}"
-)
-
-
-#nrf delay
-set(nrf_lib_delay_dir ${SDK_LIB_DIR}/delay)
-
-set(nrf_lib_delay_inc
-  "${nrf_lib_delay_dir}"
-)
-
-#######################################
-set(overall_inc
-	"${nrfx_inc}"
-	"${SDK_DIR}/examples/peripheral/blinky/pca10056/blank/config"
-	"${SDK_DIR}/components/boards"
-	"${SDK_DIR}/components/drivers_nrf/nrf_soc_nosd"
-	"${nrf_lib_util_inc}"
-	"${nrf_lib_delay_inc}"
-	"${nrf_lib_strerror_inc}"
-	"${nrf_lib_section_inc}"
-	"${nrf_lib_log_inc}"
-)
+# Source files common to all targets
+set(SDK_ROOT "/mnt/c/Users/ermac/Documents/SDKs/nRF5SDK160098a08e2")
 
 set(board_src_list
-	"${nrf_lib_util_src}"
-	"${nrf_lib_log_src}"
-	"${nrf_lib_section_src}"
-	"${nrf_lib_strerror_src}"
-	"${SDK_DIR}/components/boards/boards.c"
+  ${SDK_ROOT}/modules/nrfx/mdk/gcc_startup_nrf52840.S
+  ${SDK_ROOT}/components/libraries/log/src/nrf_log_frontend.c
+  ${SDK_ROOT}/components/libraries/log/src/nrf_log_str_formatter.c
+  ${SDK_ROOT}/components/boards/boards.c
+  ${SDK_ROOT}/components/libraries/util/app_error.c
+  ${SDK_ROOT}/components/libraries/util/app_error_handler_gcc.c
+  ${SDK_ROOT}/components/libraries/util/app_error_weak.c
+  ${SDK_ROOT}/components/libraries/util/app_util_platform.c
+  ${SDK_ROOT}/components/libraries/util/nrf_assert.c
+  ${SDK_ROOT}/components/libraries/atomic/nrf_atomic.c
+  ${SDK_ROOT}/components/libraries/balloc/nrf_balloc.c
+  ${SDK_ROOT}/external/fprintf/nrf_fprintf.c
+  ${SDK_ROOT}/external/fprintf/nrf_fprintf_format.c
+  ${SDK_ROOT}/components/libraries/memobj/nrf_memobj.c
+  ${SDK_ROOT}/components/libraries/ringbuf/nrf_ringbuf.c
+  ${SDK_ROOT}/components/libraries/strerror/nrf_strerror.c
+  ${SDK_ROOT}/modules/nrfx/soc/nrfx_atomic.c
+  ${SDK_ROOT}/modules/nrfx/mdk/system_nrf52840.c
+)
+# Include folders common to all targets
+set(overall_inc
+  ${SDK_ROOT}/components
+  ${SDK_ROOT}/modules/nrfx/mdk
+  ${SDK_ROOT}/components/libraries/strerror
+  ${SDK_ROOT}/components/toolchain/cmsis/include
+  ${SDK_ROOT}/components/libraries/util
+  ${SDK_ROOT}/components/libraries/balloc
+  ${SDK_ROOT}/components/libraries/ringbuf
+  ${SDK_ROOT}/modules/nrfx/hal
+  ${SDK_ROOT}/components/libraries/bsp
+  ${SDK_ROOT}/components/libraries/log
+  ${SDK_ROOT}/modules/nrfx
+  ${SDK_ROOT}/components/libraries/experimental_section_vars
+  ${SDK_ROOT}/components/libraries/delay
+  ${SDK_ROOT}/integration/nrfx
+  ${SDK_ROOT}/components/drivers_nrf/nrf_soc_nosd
+  ${SDK_ROOT}/components/libraries/atomic
+  ${SDK_ROOT}/components/boards
+  ${SDK_ROOT}/components/libraries/memobj
+  ${SDK_ROOT}/external/fprintf
+  ${SDK_ROOT}/components/libraries/log/src
 )
 
-set(SDK_DEFS "-DNRF52840_XXAA -DBOARD_PCA10056 -DBSP_DEFINES_ONLY -DCONFIG_GPIO_AS_PINRESET -DFLOAT_ABI_HARD")
-SET(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} ${SDK_DEFS}")
+#Example specific#
+set(example_ld_path ${SDK_ROOT}/examples/peripheral/blinky/pca10056/blank/armgcc/blinky_gcc_nrf52.ld)
+set(overall_inc ${overall_inc} ${SDK_ROOT}/examples/peripheral/blinky/pca10056/blank/config)
+set(overall_inc ${overall_inc} ${SDK_ROOT}/examples/peripheral/blinky/)
+set(board_src_list ${board_src_list} ${SDK_ROOT}/examples/peripheral/blinky/main.c)
+##################
 
 include_directories("${overall_inc}")
+
+set(board_defs "-DNRF52840_XXAA -DBOARD_PCA10056 -DBSP_DEFINES_ONLY -DCONFIG_GPIO_AS_PINRESET -DFLOAT_ABI_HARD")
+set(board_mem_defs "-D__HEAP_SIZE=8192 -D__STACK_SIZE=8192")
+
+SET(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} ${board_defs} ${board_mem_defs}")
+SET(CMAKE_ASM_FLAGS  "${CMAKE_ASM_FLAGS} ${board_defs} ${board_mem_defs}")
+
+SET(CMAKE_EXE_LINKER_FLAGS "-T${example_ld_path} ${CMAKE_EXE_LINKER_FLAGS}")
+SET(CMAKE_EXE_LINKER_FLAGS "-L${SDK_ROOT}/modules/nrfx/mdk ${CMAKE_EXE_LINKER_FLAGS}")

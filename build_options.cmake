@@ -1,6 +1,6 @@
 ###############################################################################
 #Need to clarify how this feature works
-set(LTO_OPT "-flto")
+# set(LTO_OPT "-flto")
 ###############################################################################
 if (NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Debug CACHE STRING "Default build type is ${CMAKE_BUILD_TYPE}" FORCE)

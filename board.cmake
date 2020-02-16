@@ -134,7 +134,7 @@ set(freertos_conf ${example_path}/config)
 
 set(overall_inc ${overall_inc} ${freertos_conf})
 
-set(board_defs "-DFREERTOS -DBSP_DEFINES_ONLY ")
+set(board_defs "-DFREERTOS")
 
 set(example_ld ${example_ld_path}/${ld_prefix}_gcc_nrf52.ld)
 set(overall_inc ${overall_inc} ${example_config_path})
@@ -142,7 +142,6 @@ set(overall_inc ${overall_inc} ${example_path})
 set(board_src_list ${board_src_list} ${example_path}/main.c)
 ##################
 
-message("overall_inc ${overall_inc}")
 include_directories("${overall_inc}")
 
 set(board_defs "${board_defs} -DNRF52840_XXAA -DBOARD_PCA10056 -DCONFIG_GPIO_AS_PINRESET -DFLOAT_ABI_HARD")

@@ -95,7 +95,7 @@ set(overall_inc
   ${SDK_ROOT}/components/libraries/strerror
   ${SDK_ROOT}/components/toolchain/cmsis/include
   ${SDK_ROOT}/external/freertos/source/include
-  ${SDK_ROOT}/external/freertos/config
+  # ${SDK_ROOT}/external/freertos/config
   ${SDK_ROOT}/components/libraries/util
 #   ../config
   ${SDK_ROOT}/components/libraries/balloc

@@ -1,5 +1,11 @@
 # Source files common to all targets
-set(SDK_ROOT "/mnt/c/Users/ermac/Documents/SDKs/nRF5SDK160098a08e2")
+set(SDK_ROOT "")
+
+if(DEFINED $ENV{NRF_SDK_DIR})
+	message("Please provide an environment variable NRF_SDK_DIR\n")
+else()
+	set(SDK_ROOT $ENV{NRF_SDK_DIR} CACHE INTERNAL "NRF_SDK_DIR path")
+endif()
 
 include(example_ble_hrs_freertos.cmake)
 

@@ -7,14 +7,38 @@ set(cpu_arch "v7e-m")
 set(cpu_fp "+fp")
 set(cpu_fp_abi "hard")
 #System paths
-SET(COMPILER_PATH "/mnt/c/Users/ermac/Documents/wsl/gcc-arm-none-eabi-9-2019-q4-major")
-SET(COMPILER_BIN "${COMPILER_PATH}/bin")
-SET(TOOLCHAIN_LIB_DIR "${COMPILER_PATH}/arm-none-eabi/lib/thumb/v7e-m+fp/hard")
-SET(TOOLCHAIN_INC_DIR "${COMPILER_PATH}/arm-none-eabi/include")
-set(LIBLTO_PATH "${COMPILER_PATH}/lib/gcc/arm-none-eabi/9.2.1/liblto_plugin.so")
+
+set(COMPILER_PATH "")
+
+if(DEFINED $ENV{ARM_GCC_COMPILER_DIR})
+	message("Please provide an environment variable ARM_GCC_COMPILER_DIR\n")
+else()
+	set(COMPILER_PATH $ENV{ARM_GCC_COMPILER_DIR} CACHE INTERNAL "ARM_GCC_COMPILER_DIR path")
+endif()
 
 SET(COMPILER_PREFIX arm-none-eabi-)
+set(COMPILER_PATH ${ARM_GCC_COMPILER_DIR})
+SET(COMPILER_BIN "${COMPILER_PATH}/bin")
 
+
+set(COMPILER_VERSION "6.2.1")
+
+execute_process(COMMAND ${COMPILER_BIN}/${COMPILER_PREFIX}gcc -dumpversion 
+				OUTPUT_VARIABLE COMPILER_VERSION 
+				OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+if(NOT COMPILER_VERSION)
+	message("Can't get compiler version\n")
+	message("Default compiler version is ${COMPILER_VERSION}")
+else()
+	message("Compiler version is ${COMPILER_VERSION}")
+endif()
+
+SET(TOOLCHAIN_LIB_DIR "${COMPILER_PATH}/${COMPILER_PREFIX}/lib/thumb/v7e-m+fp/hard")
+SET(TOOLCHAIN_INC_DIR "${COMPILER_PATH}/${COMPILER_PREFIX}/include")
+set(LIBLTO_PATH "${COMPILER_PATH}/lib/gcc/${COMPILER_PREFIX}/${COMPILER_VERSION}/liblto_plugin.so")
+
+# SET(COMPILER_PATH "/mnt/c/Users/ermac/Documents/wsl/gcc-arm-none-eabi-9-2019-q4-major")
 SET(CMAKE_C_COMPILER "${COMPILER_BIN}/${COMPILER_PREFIX}gcc" CACHE INTERNAL "")
 SET(CMAKE_ASM_COMPILER "${COMPILER_BIN}/${COMPILER_PREFIX}gcc" CACHE INTERNAL "")
 SET(CMAKE_CXX_COMPILER "${COMPILER_BIN}/${COMPILER_PREFIX}g++" CACHE INTERNAL "")
